@@ -166,64 +166,75 @@ func calcGridSize(letterValue int) int {
 }
 
 func stringSpacing(count int) string {
-	tmpString := ""
+	tmpString := ``
 	loopCount := 1
 	for loopCount <= count {
-		tmpString = tmpString + " "
+		tmpString = tmpString + ` `
+		loopCount++
 	}
 	return tmpString
 }
 
-func drawDiamond(s string) rows {
+func drawDiamond(s string) []string {
 	LetterValue := alphabetValue(s)
 	MaxWidthHeight := calcGridSize(LetterValue)
 	TotalLength := (MaxWidthHeight * MaxWidthHeight)
 	fmt.Println("GridSize: ", MaxWidthHeight, " StrLength: ", TotalLength)
+	retData := []string{}
 
 	// Loop A
 	loopAcount := 0
 	for loopAcount <= LetterValue {
-		fmt.Println("Loop A ", loopAcount)
-
-		if loopAcount == 0 {
-			res := ""
-			res = stringSpacing(calcSpacing(LetterValue, loopAcount))
-			res = res + valueAlphabet(loopAcount)
-			res = res + stringSpacing(calcSpacing(LetterValue, loopAcount))
-			fmt.Println(res)
-			// write spacing (LetterValue - LoopCount)
-			// Write letter valueAlphabet(LoopCount)
-			// write spacing
-		}
-		if loopAcount != 0 {
-			if loopAcount != LetterValue {
-				// write spacing
-				// Write letter
-				// write middle space   (((LoopCount -1) *2) +1)
-				// Write letter
-				// write spacing
-			}
-		}
-		if loopAcount == LetterValue {
-			// Write letter
-			// write middle space
-			// Write letter
-		}
-
+		//fmt.Println("Loop A ", loopAcount)
+		retData = append(retData, innerDrawLoop(loopAcount, LetterValue))
 		loopAcount++
 	}
 	// Loop B
 	loopBcount := LetterValue - 1
 	for loopBcount >= 0 {
-		fmt.Println("Loop B ", loopBcount)
+		//fmt.Println("Loop B ", loopBcount)
+		retData = append(retData, innerDrawLoop(loopBcount, LetterValue))
 		loopBcount--
 	}
 
-	data := rows{{row: s}}
-	return data
+	return retData
 }
 
-func main() {
-	data := drawDiamond("A")
-	fmt.Print(data)
+func innerDrawLoop(loop int, LetterValue int) string {
+	if loop == 0 {
+		res := ""
+		res = stringSpacing(calcSpacing(LetterValue, loop))       // write spacing
+		res = res + valueAlphabet(loop)                           // Write letter
+		res = res + stringSpacing(calcSpacing(LetterValue, loop)) // write spacing
+		//fmt.Println(res)
+		return res
+	}
+	if loop != 0 {
+		if loop != LetterValue {
+			res1 := ""
+			res1 = stringSpacing(calcSpacing(LetterValue, loop))        // write spacing
+			res1 = res1 + valueAlphabet(loop)                           // Write letter
+			res1 = res1 + stringSpacing(calcMidSpacing(loop))           // write middle space
+			res1 = res1 + valueAlphabet(loop)                           // Write letter
+			res1 = res1 + stringSpacing(calcSpacing(LetterValue, loop)) // write spacing
+			//fmt.Println(res1)
+			return res1
+		}
+	}
+	if loop == LetterValue {
+		res2 := ""
+		res2 = res2 + valueAlphabet(loop)                 // Write letter
+		res2 = res2 + stringSpacing(calcMidSpacing(loop)) // write middle space
+		res2 = res2 + valueAlphabet(loop)                 // Write letter
+		//fmt.Println(res2)
+		return res2
+	}
+	return ""
 }
+
+// func main() {
+// 	data := drawDiamond("E")
+// 	if data != nil {
+// 		//fmt.Println(data) // just one line
+// 	}
+// }
