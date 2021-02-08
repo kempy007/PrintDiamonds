@@ -59,8 +59,9 @@ No matter the grid size the center space are consistent. In a Loop take ((LoopCo
 
 
 # timelog
-Day1 11am - 6pm (-1hr) by 2pm had clear idea of howto solve.
-Day1 9pm - 11pm Solved in vscode.
+after fews hours had clear idea of howto solve. 6hrs
+Solved in vscode. 2hrs
+Total 8hrs
 
 
 https://cyber-dojo.org/kata/edit/TAKQTP
